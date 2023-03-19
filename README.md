@@ -43,7 +43,7 @@ err = bot.SendMessageReply("guid" , "text" , "messageId")
 ## برای ارسال فایل
 
 ```go
-err = bot.SendFile("guid" , "fileName" , data (io.Reader) , "fileType (txt , mp3 , mp4 , ...)")
+err = bot.SendFile("guid" , "fileName" , data (io.Reader) , "caption")
 ```
 برای ارسال عکس هم به همین شکل فقط از متد bot.SendImage استفاده کنید
 
