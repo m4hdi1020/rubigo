@@ -35,7 +35,7 @@ message , err := bot.GetUserMessage("user guid")
 
 ```go
 err = bot.SendMessage("guid" , "text")
-// for replay to message
+// To reply to a message
 err = bot.SendMessageReply("guid" , "text" , "messageId")
 ```
 ## برای ارسال فایل
