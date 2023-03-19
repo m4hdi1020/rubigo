@@ -53,4 +53,3 @@ err = bot.SendFile("guid" , "fileName" , data (io.Reader) , "fileType (txt , mp3
 + rubika: @go_lang
 + email: m4hdi2022@gmail.com
 
-**ممنون از شایان که به من توی توسعه این کتابخونه کمک زیادی کرد**
