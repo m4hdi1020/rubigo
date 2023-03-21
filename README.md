@@ -44,7 +44,6 @@ err = bot.SendFile("guid" , "fileName" , data (io.Reader) , "caption" , "Message
 + Rubika: @go_lang
 + Email: m4hdi2022@gmail.com
 
-### Contributors:
-[echo](https://github.com/darkecho2022/)
 
-[Shayan Ghosi](https://github.com/shadowcoder2020/)
+### ممنون از
+**[شایان قوسی](https://github.com/shadowcoder2020/)**
