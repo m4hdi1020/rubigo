@@ -4,7 +4,7 @@
 # برای نصب:
 
 ```sh
-go get -u github.com/darkecho2022/rubigo
+go get -u github.com/darkecho2022/rubigo@v1.2.4
 ```
 
 # شروع کردن:
@@ -22,16 +22,6 @@ messages , err := bot.GetMessageAll()
 ```
 
 **این دستور به شماآخرین پیام های ارسال شده به همراه اطلاعات دیگه ای مثل guid نویسنده پیام، guid جایی که پیام ارسال شده، messageId پیام و... رو میده**
-
-## برای بدست آوردن آخرین پیام ارسال شده در یک گروه یا پیوی خاص
-
-```go
-message , err := bot.GetGroupMessage("group guid")
-// for user
-message , err := bot.GetUserMessage("user guid")
-```
-
-متد های دیگه ای هم برای دریافت پیام موجوده که روش استفاده ازشون سادست نیازی به گفتن نیست
 
 ## برای ارسال متن
 
