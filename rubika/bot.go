@@ -66,7 +66,6 @@ const (
 )
 
 var (
-	key           []byte
 	rubikaAPIList = [4]string{"https://messengerg2c32.iranlms.ir/", "https://messengerg2c201.iranlms.ir/", "https://messengerg2c171.iranlms.ir/", "https://messengerg2c146.iranlms.ir/"}
 )
 
@@ -1111,7 +1110,7 @@ func newGetChannelAdmins(guid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1136,7 +1135,7 @@ func newGetGroupLink(guid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1162,7 +1161,7 @@ func newSetGroupAccess(groupGuid string, AccessList []string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1173,7 +1172,7 @@ func NewBot(auth string) (bot, error) {
 	if len(auth) != 32 {
 		return bot{}, fmt.Errorf("error: your auth is invalid :(")
 	}
-	key = encryption.Secret(auth)
+	encryption.Key = encryption.Secret(auth)
 	return bot{Auth: auth}, nil
 }
 
@@ -1197,7 +1196,7 @@ func newRemoveGroupAdmin(groupGuid, memberGuid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1225,7 +1224,7 @@ func newAddGroupAdmin(groupGuid string, memberGuid string, accessList []string) 
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1250,7 +1249,7 @@ func newGetChannelAllMembers(guid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1275,7 +1274,7 @@ func newGetAllGroupMembers(guid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1300,7 +1299,7 @@ func newGetGroupAdminMembers(guid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1325,7 +1324,7 @@ func newChannelInfo(guid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1350,7 +1349,7 @@ func newGetInfoById(username string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1376,7 +1375,7 @@ func newDeleteChatHistory(guid string, lastMessageId string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1401,7 +1400,7 @@ func newGroupInfo(groupGuid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1429,7 +1428,7 @@ func newForwardMessage(fromGuid, ToGuid string, messageIds []string) (string, er
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1455,7 +1454,7 @@ func newDeleteUserChat(userGuid, lastDeletedMessageId string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1481,7 +1480,7 @@ func newBlockUser(userGuid string, action string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1506,7 +1505,7 @@ func newUserInfo(userGuid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1533,7 +1532,7 @@ func newPinMessage(groupGuid, messageId string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -1560,7 +1559,7 @@ func newRemoveMember(groupGuid string, memberGuid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1585,7 +1584,7 @@ func newLeaveGroup(guid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1610,7 +1609,7 @@ func newJoinGroup(hashLink string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1633,7 +1632,7 @@ func newWebSocket(auth string, index int) ([]WebSocketResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return nil, err
 	}
@@ -1671,7 +1670,7 @@ func newWebSocket(auth string, index int) ([]WebSocketResponse, error) {
 		if err != nil {
 			return nil, err
 		}
-		decodeData, err := encryption.Decrypt(key, jsonData["data_enc"])
+		decodeData, err := encryption.Decrypt(jsonData["data_enc"])
 		if err != nil {
 			return nil, err
 		}
@@ -1729,7 +1728,7 @@ func newSendFile(text, guid, dcId, fileId, fileName string, size int, accessHash
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1788,7 +1787,7 @@ func newSendImage(guid string, caption string, dcId string, id string, fileName 
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1829,8 +1828,7 @@ func newSend(auth string, dataEnc string) (map[string]string, error) {
 	return body, nil
 }
 
-func newEditText(auth string, text string, guid string, messageId string) (string, error) {
-	key = encryption.Secret(auth)
+func newEditText(text string, guid string, messageId string) (string, error) {
 	data := EditText{
 		Method: editMessage,
 		Input: struct {
@@ -1850,7 +1848,7 @@ func newEditText(auth string, text string, guid string, messageId string) (strin
 	if err != nil {
 		return "", fmt.Errorf("error in Marshaling data:\n%v", err)
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1885,7 +1883,7 @@ func newSendMessage(text string, guid string, messageId string) (string, error) 
 	if err != nil {
 		return "", fmt.Errorf("error in Marshaling data:\n%v", err)
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1914,7 +1912,7 @@ func newDeleteMessage(guid string, messageId ...string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1939,7 +1937,7 @@ func newChatUpdates(auth string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("error in marshaling default values to json. line(43)")
 	}
-	methodValueEncode, err := encryption.Encrypt(key, methodValueJson)
+	methodValueEncode, err := encryption.Encrypt(methodValueJson)
 	if err != nil {
 		return "", err
 	}
@@ -1972,7 +1970,7 @@ func newPoll(guid string, isAnonymous bool, multipleAnswers bool, question strin
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}
@@ -1999,7 +1997,7 @@ func newSendInfoFile(fileName string, size int) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return "", err
 	}

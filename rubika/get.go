@@ -21,7 +21,7 @@ func (b bot) GetMessageAll() ([]getChats, error) {
 	if err != nil {
 		return nil, err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +92,7 @@ func (b bot) WebSocket() (*websocket.Conn, error) {
 	if err != nil {
 		return nil, err
 	}
-	dataEnc, err := encryption.Encrypt(key, dataJson)
+	dataEnc, err := encryption.Encrypt(dataJson)
 	if err != nil {
 		return nil, err
 	}
@@ -121,38 +121,6 @@ func (b bot) WebSocket() (*websocket.Conn, error) {
 	return conn, nil
 }
 
-func (b bot) GetUserMessage(userGuid string) (getChats, error) {
-	if userGuid[0:1] != "u" {
-		return getChats{}, fmt.Errorf("error: your auth is invalid")
-	}
-	messages, err := b.GetMessageAll()
-	if err != nil {
-		return getChats{}, err
-	}
-	for i := range messages {
-		if messages[i].AbsObject.ObjectGuid[0:1] == "u" && messages[i].LastMessage.AuthorObjectGuid == userGuid {
-			return messages[i], nil
-		}
-	}
-	return getChats{}, nil
-}
-
-func (b bot) GetGroupMessage(groupGuid string) (getChats, error) {
-	if groupGuid[0:1] != "g" {
-		return getChats{}, fmt.Errorf("error: your auth is invalid")
-	}
-	messages, err := b.GetMessageAll()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	for i := range messages {
-		if messages[i].AbsObject.ObjectGuid[0:1] == "g" && messages[i].AbsObject.ObjectGuid == groupGuid {
-			return messages[i], nil
-		}
-	}
-	return getChats{}, nil
-}
-
 func (b bot) GetUserInfo(userGuid string) (userInfo, error) {
 	if userGuid[0:1] != "u" {
 		return userInfo{}, fmt.Errorf("error: your GUID is invalid")
@@ -165,7 +133,7 @@ func (b bot) GetUserInfo(userGuid string) (userInfo, error) {
 	if err != nil {
 		return userInfo{}, err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return userInfo{}, err
 	}
@@ -193,7 +161,7 @@ func (b bot) BlockUser(userGuid string) error {
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -220,7 +188,7 @@ func (b bot) UnblockUser(userGuid string) error {
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -244,7 +212,7 @@ func (b bot) DeleteUserChat(userGuid, lastMessageId string) error {
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -274,7 +242,7 @@ func (b bot) GetGroupInfo(groupGuid string) (groupInfo, error) {
 		return groupInfo{}, err
 	}
 
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return groupInfo{}, err
 	}
@@ -295,7 +263,7 @@ func (b bot) DeleteChatHistory(chatGuid string, lastMessageId string) error {
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -323,7 +291,7 @@ func (b bot) GetInfoByUsername(username string) (infoByUsername, error) {
 	if err != nil {
 		return infoByUsername{}, err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return infoByUsername{}, err
 	}
@@ -347,7 +315,7 @@ func (b bot) GetChannelInfo(channelGuid string) (channelInfoData, error) {
 	if err != nil {
 		return channelInfoData{}, err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return channelInfoData{}, err
 	}
@@ -371,7 +339,7 @@ func (b bot) GetGroupAdminInfo(groupGuid string) (adminMembersData, error) {
 	if err != nil {
 		return adminMembersData{}, err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return adminMembersData{}, err
 	}
@@ -398,7 +366,7 @@ func (b bot) GetAllGroupMembers(groupGuid string) (allGroupMembersData, error) {
 	if err != nil {
 		return allGroupMembersData{}, err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return allGroupMembersData{}, err
 	}
@@ -425,7 +393,7 @@ func (b bot) GetChannelAllMembers(channelGuid string) (channelMembersData, error
 	if err != nil {
 		return channelMembersData{}, err
 	}
-	bodyDeocde, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDeocde, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return channelMembersData{}, err
 	}
@@ -453,7 +421,7 @@ func (b bot) GetGroupLink(groupGuid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return "", err
 	}
@@ -480,7 +448,7 @@ func (b bot) GetChannelLink(channelGuid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return "", err
 	}
@@ -507,7 +475,7 @@ func (b bot) GetChannelAdmins(channelGuid string) (channelAdmins, error) {
 	if err != nil {
 		return channelAdmins{}, err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return channelAdmins{}, err
 	}

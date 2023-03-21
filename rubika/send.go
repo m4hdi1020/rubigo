@@ -33,7 +33,7 @@ func (b bot) SendMessage(text string, guid string, replyToMessageID string) erro
 	if err != nil {
 		return err
 	}
-	responseText, err := encryption.Decrypt(key, body["data_enc"])
+	responseText, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -55,7 +55,7 @@ func (b bot) EditMessage(text string, guid string, messageId string) error {
 	if guid == ""{
 		return fmt.Errorf("error: Guid is empty")
 	}
-	data, err := newEditText(b.Auth, text, guid, messageId)
+	data, err := newEditText(b.Auth, text, guid)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -63,7 +63,7 @@ func (b bot) EditMessage(text string, guid string, messageId string) error {
 	if err != nil {
 		return err
 	}
-	respDecode, err := encryption.Decrypt(key, body["data_enc"])
+	respDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -90,7 +90,7 @@ func (b bot) DeleteMessage(guid string, messageIds ...string) error {
 	if err != nil {
 		return err
 	}
-	decodeBody, err := encryption.Decrypt(key, body["data_enc"])
+	decodeBody, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -114,7 +114,7 @@ func (b bot) CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, que
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -158,7 +158,7 @@ func (b bot) SendFile(guid string, fileName string, data io.Reader, caption stri
 		if err != nil {
 			return err
 		}
-		bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+		bodyDecode, err := encryption.Decrypt(body["data_enc"])
 		if err != nil {
 			return err
 		}
@@ -189,7 +189,7 @@ func (b bot) SendFile(guid string, fileName string, data io.Reader, caption stri
 				if err != nil {
 					return err
 				}
-				bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+				bodyDecode, err := encryption.Decrypt(body["data_enc"])
 				if err != nil {
 					return err
 				}
@@ -223,7 +223,7 @@ func getInfoSendFile(fileName string, fileSize int, auth string) (string, string
 	if err != nil {
 		return "", "", "", "", err
 	}
-	bodydecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodydecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return "", "", "", "", err
 	}
@@ -299,7 +299,7 @@ func (b bot) JoinGroupByLink(link string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return "", err
 	}
@@ -326,7 +326,7 @@ func (b bot) LeaveGroup(guid string) error {
 	if err != nil {
 		return err
 	}
-	bodyJson, err := encryption.Decrypt(key, body["data_enc"])
+	bodyJson, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -357,7 +357,7 @@ func (b bot) RemoveMember(groupGuid string, memberGuid string) error {
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -387,7 +387,7 @@ func (b bot) PinMessage(groupGuid, messageId string) error {
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -420,7 +420,7 @@ func (b bot) ForwardMessages(fromGuid string, toGuid string, messageIds ...strin
 	if err != nil {
 		return err
 	}
-	bodyDeocde, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDeocde, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -453,7 +453,7 @@ func (b bot) AddAdminToGroup(groupGuid, memberGuid string, adminAccessList ...st
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -483,7 +483,7 @@ func (b bot) RemoveAdminGroup(groupGuid string, memberGuid string) error {
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -510,7 +510,7 @@ func (b bot) SetGroupAccess(groupGuid string, access ...string) error {
 	if err != nil {
 		return err
 	}
-	bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
 	if err != nil {
 		return err
 	}
@@ -556,7 +556,7 @@ func (b bot) SendImage(guid string, imageName string, data io.Reader, caption st
 		if err != nil {
 			return err
 		}
-		bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+		bodyDecode, err := encryption.Decrypt(body["data_enc"])
 		if err != nil {
 			return err
 		}
@@ -588,7 +588,7 @@ func (b bot) SendImage(guid string, imageName string, data io.Reader, caption st
 				if err != nil {
 					return err
 				}
-				bodyDecode, err := encryption.Decrypt(key, body["data_enc"])
+				bodyDecode, err := encryption.Decrypt(body["data_enc"])
 				if err != nil {
 					return err
 				}

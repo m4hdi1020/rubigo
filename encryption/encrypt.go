@@ -7,6 +7,8 @@ import (
 	"github.com/forgoer/openssl"
 )
 
+var Key []byte
+
 func Secret(e string) []byte {
 	t := e[0:8]
 	i := e[8:16]
@@ -25,23 +27,23 @@ func Secret(e string) []byte {
 	return []byte(n)
 }
 
-func Encrypt(key []byte, data []byte) (string , error) {
+func Encrypt(data []byte) (string , error) {
 	iv := []byte(strings.Repeat("\x00", 16))
-	result, err := openssl.AesCBCEncrypt(data, key, iv, openssl.PKCS7_PADDING)
+	result, err := openssl.AesCBCEncrypt(data, Key, iv, openssl.PKCS7_PADDING)
 	if err != nil{
 		return "" , err
 	}
 	return base64.StdEncoding.EncodeToString(result) , nil
 }
 
-func Decrypt(key []byte, data string) ([]byte , error) {
+func Decrypt(data string) ([]byte , error) {
 	iv := []byte(strings.Repeat("\x00", 16))
 
 	raw, err := base64.StdEncoding.DecodeString(data)
 	if err != nil{
 		return nil , err
 	}
-	result, err := openssl.AesCBCDecrypt(raw, key, iv, openssl.PKCS7_PADDING)
+	result, err := openssl.AesCBCDecrypt(raw, Key, iv, openssl.PKCS7_PADDING)
 	if err != nil{
 		return nil , err
 	}
