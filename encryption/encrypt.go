@@ -7,7 +7,7 @@ import (
 	"github.com/forgoer/openssl"
 )
 
-func Secret(e string) string {
+func Secret(e string) []byte {
 	t := e[0:8]
 	i := e[8:16]
 	n := e[16:24] + t + e[24:32] + i
@@ -22,32 +22,28 @@ func Secret(e string) string {
 			n = n[0:s] + t + n[s+len(t):]
 		}
 	}
-	return n
+	return []byte(n)
 }
 
-func Encrypt(key string, data []byte) (string , error) {
-	src := data
-	ke := []byte(key)
+func Encrypt(key []byte, data []byte) (string , error) {
 	iv := []byte(strings.Repeat("\x00", 16))
-	result, err := openssl.AesCBCEncrypt(src, ke, iv, openssl.PKCS7_PADDING)
+	result, err := openssl.AesCBCEncrypt(data, key, iv, openssl.PKCS7_PADDING)
 	if err != nil{
 		return "" , err
 	}
 	return base64.StdEncoding.EncodeToString(result) , nil
 }
 
-func Decrypt(key string, data string) ([]byte , error) {
-	ke := []byte(key)
+func Decrypt(key []byte, data string) ([]byte , error) {
 	iv := []byte(strings.Repeat("\x00", 16))
 
 	raw, err := base64.StdEncoding.DecodeString(data)
 	if err != nil{
 		return nil , err
 	}
-	result, err := openssl.AesCBCDecrypt(raw, ke, iv, openssl.PKCS7_PADDING)
+	result, err := openssl.AesCBCDecrypt(raw, key, iv, openssl.PKCS7_PADDING)
 	if err != nil{
 		return nil , err
 	}
 	return result , nil
 }
-

@@ -22,6 +22,9 @@ func (b bot) SendMessage(text string, guid string, replyToMessageID string) erro
 	if text == "" {
 		return fmt.Errorf("error:Text is empty")
 	}
+	if guid == ""{
+		return fmt.Errorf("error:Guid is empty")
+	}
 	dataEnc, err := newSendMessage(text, guid, replyToMessageID)
 	if err != nil {
 		return err
@@ -46,8 +49,11 @@ func (b bot) SendMessage(text string, guid string, replyToMessageID string) erro
 }
 
 func (b bot) EditMessage(text string, guid string, messageId string) error {
-	if key == "" {
-		log.Fatalln("Error: Key not generated. Use the GenerateKeyIu method to generate the key")
+	if text == ""{
+		return fmt.Errorf("error: Text is empty")
+	}
+	if guid == ""{
+		return fmt.Errorf("error: Guid is empty")
 	}
 	data, err := newEditText(b.Auth, text, guid, messageId)
 	if err != nil {
@@ -73,8 +79,8 @@ func (b bot) EditMessage(text string, guid string, messageId string) error {
 }
 
 func (b bot) DeleteMessage(guid string, messageIds ...string) error {
-	if key == "" {
-		log.Fatalln("Error: Key not generated. Use the GenerateKeyIu method to generate the key")
+	if guid == ""{
+		return fmt.Errorf("error: Guid is empty")
 	}
 	dataEnc, err := newDeleteMessage(guid, messageIds...)
 	if err != nil {
@@ -100,9 +106,6 @@ func (b bot) DeleteMessage(guid string, messageIds ...string) error {
 }
 
 func (b bot) CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, question string, options ...string) error {
-	if key == "" {
-		log.Fatalln("Error: Key not generated. Use the GenerateKeyIu method to generate the key")
-	}
 	dataEnc, err := newPoll(guid, isAnonymous, multipleAnswers, question, options...)
 	if err != nil {
 		return err
@@ -127,6 +130,9 @@ func (b bot) CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, que
 }
 
 func (b bot) SendFile(guid string, fileName string, data io.Reader, caption string, replyToMessageID string) error {
+	if guid == ""{
+		return fmt.Errorf("error: Guid is empty")
+	}
 	var buf bytes.Buffer
 	i , err := io.Copy(&buf , data)
 	if err != nil{
@@ -281,9 +287,6 @@ func sendImageData(url string, auth string, id string, hashAccess string, totalP
 }
 
 func (b bot) JoinGroupByLink(link string) (string, error) {
-	if key == "" {
-		log.Fatalln("Error: Key not generated. Use the GenerateKeyIu method to generate the key")
-	}
 	if link == "" {
 		return "", fmt.Errorf("error: link invalid")
 	}
@@ -312,6 +315,9 @@ func (b bot) JoinGroupByLink(link string) (string, error) {
 }
 
 func (b bot) LeaveGroup(guid string) error {
+	if guid == ""{
+		return fmt.Errorf("error: Guid is empty")
+	}
 	dataEnc, err := newLeaveGroup(guid)
 	if err != nil {
 		return err
@@ -336,8 +342,14 @@ func (b bot) LeaveGroup(guid string) error {
 	return nil
 }
 
-func (b bot) RemoveMember(groupGuid string, MemberGuid string) error {
-	dataEnc, err := newRemoveMember(groupGuid, MemberGuid)
+func (b bot) RemoveMember(groupGuid string, memberGuid string) error {
+	if groupGuid == ""{
+		return fmt.Errorf("error: GroupGuid is empty")
+	}
+	if memberGuid == ""{
+		return fmt.Errorf("error: MemberGuid is empty")
+	}
+	dataEnc, err := newRemoveMember(groupGuid, memberGuid)
 	if err != nil {
 		return err
 	}
@@ -361,6 +373,12 @@ func (b bot) RemoveMember(groupGuid string, MemberGuid string) error {
 }
 
 func (b bot) PinMessage(groupGuid, messageId string) error {
+	if groupGuid == ""{
+		return fmt.Errorf("error: GroupGuid is empty")
+	}
+	if messageId == ""{
+		return fmt.Errorf("error: MessageId is empty")
+	}
 	dataEnc, err := newPinMessage(groupGuid, messageId)
 	if err != nil {
 		return err
@@ -386,6 +404,12 @@ func (b bot) PinMessage(groupGuid, messageId string) error {
 }
 
 func (b bot) ForwardMessages(fromGuid string, toGuid string, messageIds ...string) error {
+	if fromGuid == ""{
+		return fmt.Errorf("error: FromGuid is empty")
+	}
+	if toGuid == ""{
+		return fmt.Errorf("error: ToGuid is empty")
+	}
 	var messageIdList []string
 	messageIdList = append(messageIdList, messageIds...)
 	dataEnc, err := newForwardMessage(fromGuid, toGuid, messageIdList)
@@ -413,10 +437,10 @@ func (b bot) ForwardMessages(fromGuid string, toGuid string, messageIds ...strin
 
 func (b bot) AddAdminToGroup(groupGuid, memberGuid string, adminAccessList ...string) error {
 	if groupGuid[0:1] != "g" {
-		return fmt.Errorf("error: your auth is invalid")
+		return fmt.Errorf("error: your guid is invalid")
 	}
 	if memberGuid[0:1] != "u" {
-		return fmt.Errorf("error: your auth is invalid")
+		return fmt.Errorf("error: your guid is invalid")
 	}
 	var accessList []string
 	accessList = append(accessList, adminAccessList...)
@@ -446,10 +470,10 @@ func (b bot) AddAdminToGroup(groupGuid, memberGuid string, adminAccessList ...st
 
 func (b bot) RemoveAdminGroup(groupGuid string, memberGuid string) error {
 	if groupGuid[0:1] != "g" {
-		return fmt.Errorf("error: your auth is invalid")
+		return fmt.Errorf("error: your guid is invalid")
 	}
 	if memberGuid[0:1] != "u" {
-		return fmt.Errorf("error: your auth is invalid")
+		return fmt.Errorf("error: your guid is invalid")
 	}
 	dataEnc, err := newRemoveGroupAdmin(groupGuid, memberGuid)
 	if err != nil {

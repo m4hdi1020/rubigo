@@ -66,7 +66,7 @@ const (
 )
 
 var (
-	key           string
+	key           []byte
 	rubikaAPIList = [4]string{"https://messengerg2c32.iranlms.ir/", "https://messengerg2c201.iranlms.ir/", "https://messengerg2c171.iranlms.ir/", "https://messengerg2c146.iranlms.ir/"}
 )
 
