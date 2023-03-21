@@ -503,16 +503,18 @@ func (b bot) SetGroupAccess(groupGuid string, access ...string) error {
 }
 
 func (b bot) SendImage(guid string, imageName string, data io.Reader, caption string, replyToMessageID string) error {
-	imageBytes, err := io.ReadAll(data)
-	if err != nil {
+	var buf bytes.Buffer
+	i , err := io.Copy(&buf , data)
+	if err != nil{
 		return err
 	}
-	reader := bufio.NewReader(bytes.NewBuffer(imageBytes))
+	imageBytes := buf.Bytes()
+	reader := bufio.NewReader(&buf)
 	imageInfo, _, err := image.DecodeConfig(reader)
 	if err != nil {
 		return err
 	}
-	size := len(imageBytes)
+	size := int(i)
 	id, dcId, hashAccess, url, err := getInfoSendFile(imageName, size, b.Auth)
 	if err != nil {
 		return err
