@@ -45,4 +45,5 @@ err = bot.SendFile("guid" , "fileName" , data (io.Reader) , "caption" , "Message
 + Email: m4hdi2022@gmail.com
 
 
+
 ### teammate: [shayan ghosi](https://github.com/shadowcoder2020)
