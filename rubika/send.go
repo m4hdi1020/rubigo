@@ -127,11 +127,13 @@ func (b bot) CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, que
 }
 
 func (b bot) SendFile(guid string, fileName string, data io.Reader, caption string, replyToMessageID string) error {
-	fileBytes, err := io.ReadAll(data)
-	if err != nil {
+	var buf bytes.Buffer
+	i , err := io.Copy(&buf , data)
+	if err != nil{
 		return err
 	}
-	size := len(fileBytes)
+	fileBytes := buf.Bytes()
+	size := int(i)
 	sizeStr := strconv.Itoa(size)
 	id, dcId, hashAccess, url, err := getInfoSendFile(fileName, size, b.Auth)
 	if err != nil {
