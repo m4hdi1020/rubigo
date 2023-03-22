@@ -10,9 +10,7 @@ import (
 var Key []byte
 
 func Secret(e string) []byte {
-	t := e[0:8]
-	i := e[8:16]
-	n := e[16:24] + t + e[24:32] + i
+	n := e[16:24] + e[0:8] + e[24:32] + e[8:16]
 
 	for s := 0; s < len(n); s++ {
 		e = n[s : s+1]
