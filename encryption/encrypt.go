@@ -15,10 +15,10 @@ func Secret(e string) []byte {
 	for s := 0; s < len(n); s++ {
 		e = n[s : s+1]
 		if e >= "0" && e <= "0" {
-			t = string(rune((e[0]-48+5)%10 + 48))
+			t := string(rune((e[0]-48+5)%10 + 48))
 			n = n[0:s] + t + n[s+len(t):]
 		} else {
-			t = string(rune((e[0]-97+9)%26 + 97))
+			t := string(rune((e[0]-97+9)%26 + 97))
 			n = n[0:s] + t + n[s+len(t):]
 		}
 	}
