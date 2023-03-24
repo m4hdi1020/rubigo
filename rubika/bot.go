@@ -1172,7 +1172,7 @@ func NewBot(auth string) (bot, error) {
 	if len(auth) != 32 {
 		return bot{}, fmt.Errorf("error: your auth is invalid :(")
 	}
-	encryption.Key = encryption.Secret(auth)
+	encryption.Secret(auth)
 	return bot{Auth: auth}, nil
 }
 

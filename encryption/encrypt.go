@@ -9,7 +9,7 @@ import (
 
 var Key []byte
 
-func Secret(e string) []byte {
+func Secret(e string){
 	n := e[16:24] + e[0:8] + e[24:32] + e[8:16]
 
 	for s := 0; s < len(n); s++ {
@@ -22,7 +22,7 @@ func Secret(e string) []byte {
 			n = n[0:s] + t + n[s+len(t):]
 		}
 	}
-	return []byte(n)
+	Key = []byte(n)
 }
 
 func Encrypt(data []byte) (string , error) {
