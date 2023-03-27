@@ -30,13 +30,25 @@ err = bot.SendMessage("guid" , "text" , "messageId")
 ```
 **توجه کنید که مقدار مسیج آیدی برای ریپلای کردن روی پیامه و اگر نمیخواید ریپلای کنه فقط کافیه مقدار "" رو قرار بدید**
 
-## برای ارسال فایل
+## ارسال فایل
 
 ```go
 err = bot.SendFile("guid" , "fileName" , data (io.Reader) , "caption" , "MessageId")
 ```
 ***اگر نمیخواید روی پیامی ریپلای کنه مقدار مسیج آیدی رو "" قرار بدید***
 برای ارسال عکس هم به همین شکل فقط از متد bot.SendImage استفاده کنید
+
+## ارسال فایل و عکس با لینک
+```go
+err = bot.SendFileByLink("link" , "guid" , data , "caption" , "MessageId")
+
+err = bot.SendImageByLink("link" , "guid" , data , "caption" , "MessageId")
+```
+
+## دانلود فایل از روبیکا
+```go
+data , err := bot.DownloadFile("guid" , "MessageId")
+```
 
 متد هایی هم برای فوروارد و پین کردن پیام. حذف یک کاربر از گروه و تغییر دسترسی های گروه و همچنین دسترسی به لیست اعضا و ادمین های گروه هاو کانال ها وغیره در کتابخونه موجوده و روش استفاده هم خیلی سادست اکثرا به guid , messageId نیاز دارن
 
