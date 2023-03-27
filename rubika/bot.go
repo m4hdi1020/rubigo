@@ -63,6 +63,7 @@ const (
 	AccessGroupViewMembers     = "ViewMembers"
 	getGroupLinkMethod         = "getGroupLink"
 	getChannelAdminsMethod     = "getChannelAdminMembers"
+	getMessageInfoMethod       = "getMessagesByID"
 )
 
 var (
@@ -1090,6 +1091,87 @@ type channelAdmins struct {
 	NextStartID string `json:"next_start_id"`
 	HasContinue bool   `json:"has_continue"`
 	Timestamp   string `json:"timestamp"`
+}
+
+type getMessageByIDPayload struct {
+	Method string `json:"method"`
+	Input  struct {
+		Guid        string   `json:"object_guid"`
+		Message_Ids []string `json:"message_ids"`
+	} `json:"input"`
+	Client struct {
+		AppName    string `json:"app_name"`
+		AppVersion string `json:"app_version"`
+		Platform   string `json:"platform"`
+		Package    string `json:"package"`
+		LangCode   string `json:"lang_code"`
+	} `json:"client"`
+}
+
+type getMessageInfoByID struct {
+	Status    string             `json:"status"`
+	StatusDet string             `json:"status_det"`
+	Data      getMessageInfoData `json:"data"`
+}
+
+type getMessageInfoData struct {
+	Messages []struct {
+		MessageID  string `json:"message_id"`
+		Text       string `json:"text"`
+		FileInline struct {
+			FileID        int64  `json:"file_id"`
+			Mime          string `json:"mime"`
+			DcID          int    `json:"dc_id"`
+			AccessHashRec string `json:"access_hash_rec"`
+			FileName      string `json:"file_name"`
+			Width         int    `json:"width"`
+			Height        int    `json:"height"`
+			Time          int    `json:"time"`
+			Size          int    `json:"size"`
+			Type          string `json:"type"`
+		} `json:"file_inline"`
+		Time          string `json:"time"`
+		IsEdited      bool   `json:"is_edited"`
+		ForwardedFrom struct {
+			TypeFrom   string `json:"type_from"`
+			MessageID  string `json:"message_id"`
+			ObjectGUID string `json:"object_guid"`
+		} `json:"forwarded_from"`
+		Type             string `json:"type"`
+		AuthorType       string `json:"author_type"`
+		AuthorObjectGUID string `json:"author_object_guid"`
+	} `json:"messages"`
+	Timestamp string `json:"timestamp"`
+}
+
+func newGetMessageInfoByID(guid string, messageIds ...string) (string, error) {
+	var messageIdsList []string
+	messageIdsList = append(messageIdsList, messageIds...)
+
+	data := getMessageByIDPayload{
+		Method: getMessageInfoMethod,
+		Input: struct {
+			Guid        string   "json:\"object_guid\""
+			Message_Ids []string "json:\"message_ids\""
+		}{Guid: guid, Message_Ids: messageIdsList},
+		Client: struct {
+			AppName    string "json:\"app_name\""
+			AppVersion string "json:\"app_version\""
+			Platform   string "json:\"platform\""
+			Package    string "json:\"package\""
+			LangCode   string "json:\"lang_code\""
+		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+	}
+	dataJson, err := json.Marshal(data)
+	if err != nil {
+		return "", err
+	}
+
+	dataEnc, err := encryption.Encrypt(dataJson)
+	if err != nil {
+		return "", err
+	}
+	return dataEnc, nil
 }
 
 func newGetChannelAdmins(guid string) (string, error) {

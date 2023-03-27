@@ -12,6 +12,8 @@ import (
 	"log"
 	"math"
 	"net/http"
+	"net/url"
+	"path"
 	"strconv"
 	"strings"
 
@@ -22,7 +24,7 @@ func (b bot) SendMessage(text string, guid string, replyToMessageID string) erro
 	if text == "" {
 		return fmt.Errorf("error:Text is empty")
 	}
-	if guid == ""{
+	if guid == "" {
 		return fmt.Errorf("error:Guid is empty")
 	}
 	dataEnc, err := newSendMessage(text, guid, replyToMessageID)
@@ -49,10 +51,10 @@ func (b bot) SendMessage(text string, guid string, replyToMessageID string) erro
 }
 
 func (b bot) EditMessage(text string, guid string, messageId string) error {
-	if text == ""{
+	if text == "" {
 		return fmt.Errorf("error: Text is empty")
 	}
-	if guid == ""{
+	if guid == "" {
 		return fmt.Errorf("error: Guid is empty")
 	}
 	data, err := newEditText(b.Auth, text, guid)
@@ -79,7 +81,7 @@ func (b bot) EditMessage(text string, guid string, messageId string) error {
 }
 
 func (b bot) DeleteMessage(guid string, messageIds ...string) error {
-	if guid == ""{
+	if guid == "" {
 		return fmt.Errorf("error: Guid is empty")
 	}
 	dataEnc, err := newDeleteMessage(guid, messageIds...)
@@ -130,12 +132,12 @@ func (b bot) CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, que
 }
 
 func (b bot) SendFile(guid string, fileName string, data io.Reader, caption string, replyToMessageID string) error {
-	if guid == ""{
+	if guid == "" {
 		return fmt.Errorf("error: Guid is empty")
 	}
 	var buf bytes.Buffer
-	i , err := io.Copy(&buf , data)
-	if err != nil{
+	i, err := io.Copy(&buf, data)
+	if err != nil {
 		return err
 	}
 	fileBytes := buf.Bytes()
@@ -315,7 +317,7 @@ func (b bot) JoinGroupByLink(link string) (string, error) {
 }
 
 func (b bot) LeaveGroup(guid string) error {
-	if guid == ""{
+	if guid == "" {
 		return fmt.Errorf("error: Guid is empty")
 	}
 	dataEnc, err := newLeaveGroup(guid)
@@ -343,10 +345,10 @@ func (b bot) LeaveGroup(guid string) error {
 }
 
 func (b bot) RemoveMember(groupGuid string, memberGuid string) error {
-	if groupGuid == ""{
+	if groupGuid == "" {
 		return fmt.Errorf("error: GroupGuid is empty")
 	}
-	if memberGuid == ""{
+	if memberGuid == "" {
 		return fmt.Errorf("error: MemberGuid is empty")
 	}
 	dataEnc, err := newRemoveMember(groupGuid, memberGuid)
@@ -373,10 +375,10 @@ func (b bot) RemoveMember(groupGuid string, memberGuid string) error {
 }
 
 func (b bot) PinMessage(groupGuid, messageId string) error {
-	if groupGuid == ""{
+	if groupGuid == "" {
 		return fmt.Errorf("error: GroupGuid is empty")
 	}
-	if messageId == ""{
+	if messageId == "" {
 		return fmt.Errorf("error: MessageId is empty")
 	}
 	dataEnc, err := newPinMessage(groupGuid, messageId)
@@ -404,10 +406,10 @@ func (b bot) PinMessage(groupGuid, messageId string) error {
 }
 
 func (b bot) ForwardMessages(fromGuid string, toGuid string, messageIds ...string) error {
-	if fromGuid == ""{
+	if fromGuid == "" {
 		return fmt.Errorf("error: FromGuid is empty")
 	}
-	if toGuid == ""{
+	if toGuid == "" {
 		return fmt.Errorf("error: ToGuid is empty")
 	}
 	var messageIdList []string
@@ -528,8 +530,8 @@ func (b bot) SetGroupAccess(groupGuid string, access ...string) error {
 
 func (b bot) SendImage(guid string, imageName string, data io.Reader, caption string, replyToMessageID string) error {
 	var buf bytes.Buffer
-	i , err := io.Copy(&buf , data)
-	if err != nil{
+	i, err := io.Copy(&buf, data)
+	if err != nil {
 		return err
 	}
 	imageBytes := buf.Bytes()
@@ -610,6 +612,42 @@ func (b bot) SendImage(guid string, imageName string, data io.Reader, caption st
 				e += 131072
 			}
 		}
+	}
+	return nil
+}
+
+func (b bot) SendFileByLink(link string, guid string, caption string, replyToMessageId string) error {
+	u, err := url.Parse(link)
+	if err != nil {
+		return fmt.Errorf("error: your link is invalid\nError: %s", err.Error())
+	}
+	fileName := path.Base(u.Path)
+	resp, err := http.Get(link)
+	if err != nil {
+		return fmt.Errorf("error http request:\nError Message: %s", err.Error())
+	}
+	defer resp.Body.Close()
+	err = b.SendFile(guid, fileName, resp.Body, caption, replyToMessageId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (b bot) SendImageByLink(link string, guid string, caption string, replyToMessageId string) error{
+	u , err := url.Parse(link)
+	if err != nil{
+		return fmt.Errorf("error: your link is invalid\nError: %s", err.Error())
+	}
+	imageName := path.Base(u.Path)
+	resp , err := http.Get(link)
+	if err != nil{
+		return fmt.Errorf("error http request:\nError Message: %s", err.Error())
+	}
+	defer resp.Body.Close()
+	err = b.SendImage(guid , imageName , resp.Body , caption , replyToMessageId)
+	if err != nil{
+		return err
 	}
 	return nil
 }

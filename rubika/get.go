@@ -3,8 +3,12 @@ package rubika
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
+	"math"
 	"math/rand"
+	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -488,4 +492,93 @@ func (b bot) GetChannelAdmins(channelGuid string) (channelAdmins, error) {
 		return channelAdmins{}, fmt.Errorf("error getting channel admins >>>\nChannel Guid: %v\nServer Response:\n%+v", channelGuid, response)
 	}
 	return response.Data, nil
+}
+
+func (b bot) GetMessagesInfoByID(guid string, messageIds ...string) (getMessageInfoData, error) {
+	dataEnc, err := newGetMessageInfoByID(guid, messageIds...)
+	if err != nil {
+		return getMessageInfoData{}, err
+	}
+	body, err := newSend(b.Auth, dataEnc)
+	if err != nil {
+		return getMessageInfoData{}, err
+	}
+
+	bodyDecode, err := encryption.Decrypt(body["data_enc"])
+	if err != nil {
+		return getMessageInfoData{}, err
+	}
+	var response getMessageInfoByID
+	err = json.Unmarshal(bodyDecode, &response)
+	if err != nil {
+		return getMessageInfoData{}, err
+	}
+	if response.Status != "OK" {
+		return getMessageInfoData{}, fmt.Errorf("error getting message Info by ID --->\nServer Response:\n%+v", response)
+	}
+	return response.Data, nil
+
+}
+
+func (b bot) DownloadFile(guid string, messageId string) (string, []byte, error) {
+	info, err := b.GetMessagesInfoByID(guid, messageId)
+	if err != nil {
+		return "", nil, err
+	}
+	if info.Messages[0].FileInline.FileID == 0 {
+		return "", nil, fmt.Errorf("error: your message is not a file")
+	}
+	data, err := downloader(b.Auth, strconv.Itoa(int(info.Messages[0].FileInline.FileID)), strconv.Itoa(info.Messages[0].FileInline.DcID), info.Messages[0].FileInline.AccessHashRec, info.Messages[0].FileInline.Size)
+	if err != nil {
+		return "", nil, err
+	}
+	return info.Messages[0].FileInline.FileName, data, nil
+}
+
+func downloader(auth string, fileId string, dcID string, accessHash string, size int) ([]byte, error) {
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", fmt.Sprintf("https://messenger%s.iranlms.ir/GetFile.ashx", dcID), nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("access-hash-rec", accessHash)
+	req.Header.Set("auth", auth)
+	req.Header.Set("file-id", fileId)
+
+	totalPart := int(math.Ceil(float64(size) / float64(131072)))
+	s := 0
+	e := 131072
+	data := make([]byte, 0, size)
+	for i := 1; i <= totalPart; i++ {
+		if i == totalPart {
+			req.Header.Set("start-index", strconv.Itoa(s))
+			req.Header.Set("last-index", strconv.Itoa(size))
+			resp, err := client.Do(req)
+			if err != nil {
+				return nil, err
+			}
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			data = append(data, body...)
+			resp.Body.Close()
+		} else {
+			req.Header.Set("start-index", strconv.Itoa(s))
+			req.Header.Set("last-index", strconv.Itoa(e))
+			resp, err := client.Do(req)
+			if err != nil {
+				return nil, err
+			}
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			data = append(data, body...)
+			resp.Body.Close()
+			s = e + 1
+			e += 131072
+		}
+	}
+	return data, nil
 }
