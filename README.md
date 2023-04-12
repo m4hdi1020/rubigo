@@ -47,7 +47,7 @@ err = bot.SendImageByLink("link" , "guid" , data , "caption" , "MessageId")
 
 ## دانلود فایل از روبیکا
 ```go
-data , err := bot.DownloadFile("guid" , "MessageId")
+fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 ```
 
 متد هایی هم برای فوروارد و پین کردن پیام. حذف یک کاربر از گروه و تغییر دسترسی های گروه و همچنین دسترسی به لیست اعضا و ادمین های گروه هاو کانال ها وغیره در کتابخونه موجوده و روش استفاده هم خیلی سادست اکثرا به guid , messageId نیاز دارن
