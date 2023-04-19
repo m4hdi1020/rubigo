@@ -1,4 +1,5 @@
 module github.com/m4hdi1020/rubigo
+replace github.com/darkecho2022/rubigo => github.com/m4hdi1020/rubigo v0.6.2
 
 go 1.20
 
