@@ -4,7 +4,7 @@
 # برای نصب:
 
 ```sh
-go get -u github.com/darkecho2022/rubigo@v1.5.4
+go get -u github.com/m4hdi1020/rubigo@v1.5.4
 ```
 
 # شروع کردن:
