@@ -17,7 +17,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/darkecho2022/rubigo/encryption"
+	"github.com/m4hdi1020/rubigo/encryption"
 )
 
 func (b bot) SendMessage(text string, guid string, replyToMessageID string) error {
