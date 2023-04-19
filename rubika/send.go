@@ -17,7 +17,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/m4hdi1020/rubigo/encryption"
+	"github.com/darkecho2022/rubigo/encryption"
 )
 
 func (b bot) SendMessage(text string, guid string, replyToMessageID string) error {
@@ -634,19 +634,19 @@ func (b bot) SendFileByLink(link string, guid string, caption string, replyToMes
 	return nil
 }
 
-func (b bot) SendImageByLink(link string, guid string, caption string, replyToMessageId string) error{
-	u , err := url.Parse(link)
-	if err != nil{
+func (b bot) SendImageByLink(link string, guid string, caption string, replyToMessageId string) error {
+	u, err := url.Parse(link)
+	if err != nil {
 		return fmt.Errorf("error: your link is invalid\nError: %s", err.Error())
 	}
 	imageName := path.Base(u.Path)
-	resp , err := http.Get(link)
-	if err != nil{
+	resp, err := http.Get(link)
+	if err != nil {
 		return fmt.Errorf("error http request:\nError Message: %s", err.Error())
 	}
 	defer resp.Body.Close()
-	err = b.SendImage(guid , imageName , resp.Body , caption , replyToMessageId)
-	if err != nil{
+	err = b.SendImage(guid, imageName, resp.Body, caption, replyToMessageId)
+	if err != nil {
 		return err
 	}
 	return nil

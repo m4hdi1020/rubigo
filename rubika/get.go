@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/m4hdi1020/rubigo/encryption"
+	"github.com/darkecho2022/rubigo/encryption"
 	"github.com/gorilla/websocket"
 )
 
