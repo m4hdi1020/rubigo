@@ -1,5 +1,7 @@
 module github.com/m4hdi1020/rubigo
 
+replace github.com/m4hdi1020/rubigo => github.com/darkecho2022/rubigo v1.5.4
+
 go 1.20
 
 require (
