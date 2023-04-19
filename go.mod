@@ -1,4 +1,4 @@
-module github.com/darkecho2022/rubigo
+module github.com/m4hdi1020/rubigo
 
 go 1.19
 
