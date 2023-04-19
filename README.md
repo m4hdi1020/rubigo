@@ -4,10 +4,16 @@
 # برای نصب:
 
 ```sh
-go get -u github.com/m4hdi1020/rubigo@v1.5.4
+go get -u github.com/m4hdi1020/rubigo@v1.5.5
 ```
 
 # شروع کردن:
+## وارد کردن کتابخونه:
+‍‍‍
+```sh
+import "github.com/m4hdi1020/rubigo/rubika"
+```
+
 ## بعد از بدست آوردن شناسه اکانت (auth) با کد زیر بات رو ایجاد کنید
 ‍‍
 
@@ -50,7 +56,37 @@ err = bot.SendImageByLink("link" , "guid" , data , "caption" , "MessageId")
 fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 ```
 
-متد هایی هم برای فوروارد و پین کردن پیام. حذف یک کاربر از گروه و تغییر دسترسی های گروه و همچنین دسترسی به لیست اعضا و ادمین های گروه هاو کانال ها وغیره در کتابخونه موجوده و روش استفاده هم خیلی سادست اکثرا به guid , messageId نیاز دارن
+## بقیه متد ها:
+```go
+bot.GetUserInfo("User Guid")
+bot.BlockUser("User Guid")
+bot.UnblockUser("User Guid")
+bot.DeleteUserChat("User Guid" , "last Message Id")
+bot.GetGroupInfo("Group Guid")
+bot.DeleteChatHistory("Chat Guid" , "Last Message Id)
+bot.GetInfoByUsername("Username")
+bot.GetChannelInfo("Channel Guid")
+bot.GetGroupAdminInfo("Group Guid")
+bot.GetAllGroupMembers("Group Guid")
+bot.GetChannelAllMembers("Channel Guid")
+bot.GetGroupLink("Group Guid")
+bot.GetChannelLink("Channel Guid")
+bot.GetChannelAdmins("Channel Guid")
+bot.GetMessagesInfoByID("Chat Guid" , "Message Id")
+bot.EditMessage("New Text" , "Chat Guid" , "Message ID")
+bot.DeleteMessage("Chat Guid" , "Message ID 1" , "Message ID 2" , "Message ID 3" , "...")
+bot.CreatePoll("Chat Guid" , isAnonymous , multipleAnswers , "question" , "option1" , "option2" , "option3" , "...")
+bot.JoinGroupByLink("Group Link")
+bot.LeaveGroup("Group Guid")
+bot.RemoveMember("Group Guid" , "Member Guid")
+bot.PinMessage("Group Guid" , "Message ID")
+bot.ForwardMessages("from Guid" , "to Guid" , "message ID 1" , "Message ID 2" , "Message ID 3" , "...")
+bot.AddAdminToGroup("Group Guid" , "Member Guid" , AdminAccessList...)
+// Admin Access Option => AdminChangeInfoAccess , AdminPinMessageAccess , AdminDeleteGlobalMessage , AdminBanMember , AdminSetJoinLink , AdminSetAdmin , AdminSetMemberAccess
+bot.RemoveAdminGroup("Group Guid" , "Admin Guid")
+bot.SetGroupAccess("Group Guid" , GroupAccess...)
+// Group Acess Option => AccessGroupAddMember , AccessGroupViewAdmins , AccessGroupSendMessage , AccessGroupViewMembers
+```
 
 ### مشکلی داخل کتابخونه مشاهده کردید؟ لطفا به من اطلاع بدید
 + Rubika: @go_lang
