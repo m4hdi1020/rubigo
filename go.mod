@@ -1,6 +1,6 @@
 module github.com/m4hdi1020/rubigo
 
-go 1.19
+go 1.20
 
 require (
 	github.com/forgoer/openssl v1.5.0
