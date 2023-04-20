@@ -83,13 +83,7 @@ func (b bot) WebSocket() (*websocket.Conn, error) {
 	data := webSocketData{
 		Method: webSocketMethod,
 		Input:  struct{}{},
-		Clinet: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: apiVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Clinet: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
