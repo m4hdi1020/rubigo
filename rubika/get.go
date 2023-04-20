@@ -10,10 +10,9 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 
-	"github.com/m4hdi1020/rubigo/encryption"
 	"github.com/gorilla/websocket"
+	"github.com/m4hdi1020/rubigo/encryption"
 )
 
 func (b bot) GetMessageAll() ([]getChats, error) {
@@ -109,7 +108,7 @@ func (b bot) WebSocket() (*websocket.Conn, error) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	rand.Seed(time.Now().Unix())
+	// rand.Seed(time.Now().Unix())
 	conn, _, err := websocket.DefaultDialer.Dial(webSocketURL[rand.Intn(3-0+1)+0], nil)
 	if err != nil {
 		log.Fatalln(err)

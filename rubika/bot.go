@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/m4hdi1020/rubigo/encryption"
 	"github.com/gorilla/websocket"
+	"github.com/m4hdi1020/rubigo/encryption"
 )
 
 const (
@@ -68,6 +68,7 @@ const (
 
 var (
 	rubikaAPIList = [4]string{"https://messengerg2c32.iranlms.ir/", "https://messengerg2c201.iranlms.ir/", "https://messengerg2c171.iranlms.ir/", "https://messengerg2c146.iranlms.ir/"}
+	clientVal     = clientValue{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode}
 )
 
 type bot struct {
@@ -181,13 +182,7 @@ type EditText struct {
 		MessageID  string `json:"message_id"`
 		Text       string `json:"text"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type deleteMessageStruct struct {
@@ -197,13 +192,7 @@ type deleteMessageStruct struct {
 		MessageIds []string `json:"message_ids"`
 		Type       string   `json:"type"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type createPoll struct {
@@ -217,13 +206,7 @@ type createPoll struct {
 		IsAnonymous           bool     `json:"is_anonymous"`
 		AllowsMultipleAnswers bool     `json:"allows_multiple_answers"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type infoSendFile struct {
@@ -233,13 +216,7 @@ type infoSendFile struct {
 		Size     int    `json:"size"`
 		Mime     string `json:"mime"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getRespSendFile struct {
@@ -281,13 +258,7 @@ type sendFile struct {
 		Text             string `json:"text,omitempty"`
 		ReplyToMessageId string `json:"reply_to_message_id,omitempty"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type WebSocketResponse struct {
@@ -340,13 +311,7 @@ type imageData struct {
 		Text           string `json:"text,omitempty"`
 		ReplyToMessage string `json:"reply_to_message_id,omitempty"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type joinGroupData struct {
@@ -354,13 +319,7 @@ type joinGroupData struct {
 	Input  struct {
 		HashLink string `json:"hash_link"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type joinGroupReponse struct {
@@ -458,13 +417,7 @@ type leaveGroupData struct {
 	Input  struct {
 		Guid string `json:"group_guid"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type removeMemberPayload struct {
@@ -474,13 +427,7 @@ type removeMemberPayload struct {
 		MemberGuid string `json:"member_guid"`
 		Action     string `json:"action"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type pinMessage struct {
@@ -490,13 +437,7 @@ type pinMessage struct {
 		MessageID  string `json:"message_id"`
 		Action     string `json:"action"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getUserInfoPayload struct {
@@ -504,13 +445,7 @@ type getUserInfoPayload struct {
 	Input  struct {
 		UserGUID string `json:"user_guid"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type userInfoData struct {
@@ -563,13 +498,7 @@ type blockUserPayload struct {
 		UserGUID string `json:"user_guid"`
 		Action   string `json:"action"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type deleteUserChatData struct {
@@ -578,13 +507,7 @@ type deleteUserChatData struct {
 		UserGUID             string `json:"user_guid"`
 		LastDeletedMessageID string `json:"last_deleted_message_id"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue`json:"client"`
 }
 
 type forwardMessageData struct {
@@ -595,13 +518,7 @@ type forwardMessageData struct {
 		MessageIds     []string `json:"message_ids"`
 		Rnd            string   `json:"rnd"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getGroupInfoData struct {
@@ -609,13 +526,7 @@ type getGroupInfoData struct {
 	Input  struct {
 		GroupGUID string `json:"group_guid"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getGroupInfo struct {
@@ -687,13 +598,7 @@ type deleteChatHistoryPayload struct {
 		ObjectGUID    string `json:"object_guid"`
 		LastMessageID string `json:"last_message_id"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getInfoByUsernamePayload struct {
@@ -701,13 +606,7 @@ type getInfoByUsernamePayload struct {
 	Input  struct {
 		Username string `json:"username"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getResponseInfoById struct {
@@ -770,13 +669,7 @@ type channelInfoPayload struct {
 	Input  struct {
 		ChannelGUID string `json:"channel_guid"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type channelInfo struct {
@@ -847,13 +740,7 @@ type groupAdminMembersPayload struct {
 	Input  struct {
 		GroupGUID string `json:"group_guid"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type adminMembers struct {
@@ -893,13 +780,7 @@ type getAllGroupMembersPayload struct {
 	Input  struct {
 		GroupGUID string `json:"group_guid"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getAllGroupMembers struct {
@@ -936,13 +817,7 @@ type channelAllMembersPayload struct {
 	Input  struct {
 		ChannelGUID string `json:"channel_guid"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getChannelAllMembers struct {
@@ -985,13 +860,7 @@ type addGroupAdminPayload struct {
 		Action     string   `json:"action"`
 		AccessList []string `json:"access_list"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type removeGroupAdminPayload struct {
@@ -1001,13 +870,7 @@ type removeGroupAdminPayload struct {
 		MemberGUID string `json:"member_guid"`
 		Action     string `json:"action"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type groupAccessPayload struct {
@@ -1016,13 +879,7 @@ type groupAccessPayload struct {
 		GroupGUID  string   `json:"group_guid"`
 		AccessList []string `json:"access_list"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getGroupLinkPayload struct {
@@ -1030,13 +887,7 @@ type getGroupLinkPayload struct {
 	Input  struct {
 		GroupGUID string `json:"group_guid"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getGroupLink struct {
@@ -1052,13 +903,7 @@ type getChannelAdminsPayload struct {
 	Input  struct {
 		ChannelGUID string `json:"channel_guid"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type channelAdminsInfo struct {
@@ -1099,13 +944,7 @@ type getMessageByIDPayload struct {
 		Guid        string   `json:"object_guid"`
 		Message_Ids []string `json:"message_ids"`
 	} `json:"input"`
-	Client struct {
-		AppName    string `json:"app_name"`
-		AppVersion string `json:"app_version"`
-		Platform   string `json:"platform"`
-		Package    string `json:"package"`
-		LangCode   string `json:"lang_code"`
-	} `json:"client"`
+	Client clientValue `json:"client"`
 }
 
 type getMessageInfoByID struct {
@@ -1144,6 +983,14 @@ type getMessageInfoData struct {
 	Timestamp string `json:"timestamp"`
 }
 
+type clientValue struct {
+	AppName    string `json:"app_name"`
+	AppVersion string `json:"app_version"`
+	Platform   string `json:"platform"`
+	Package    string `json:"package"`
+	LangCode   string `json:"lang_code"`
+}
+
 func newGetMessageInfoByID(guid string, messageIds ...string) (string, error) {
 	var messageIdsList []string
 	messageIdsList = append(messageIdsList, messageIds...)
@@ -1154,13 +1001,7 @@ func newGetMessageInfoByID(guid string, messageIds ...string) (string, error) {
 			Guid        string   "json:\"object_guid\""
 			Message_Ids []string "json:\"message_ids\""
 		}{Guid: guid, Message_Ids: messageIdsList},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1180,13 +1021,7 @@ func newGetChannelAdmins(guid string) (string, error) {
 		Input: struct {
 			ChannelGUID string "json:\"channel_guid\""
 		}{ChannelGUID: guid},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1205,13 +1040,7 @@ func newGetGroupLink(guid string) (string, error) {
 		Input: struct {
 			GroupGUID string "json:\"group_guid\""
 		}{GroupGUID: guid},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1231,13 +1060,7 @@ func newSetGroupAccess(groupGuid string, AccessList []string) (string, error) {
 			GroupGUID  string   "json:\"group_guid\""
 			AccessList []string "json:\"access_list\""
 		}{GroupGUID: groupGuid, AccessList: AccessList},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1266,13 +1089,7 @@ func newRemoveGroupAdmin(groupGuid, memberGuid string) (string, error) {
 			MemberGUID string "json:\"member_guid\""
 			Action     string "json:\"action\""
 		}{GroupGUID: groupGuid, MemberGUID: memberGuid, Action: "UnsetAdmin"},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1294,13 +1111,7 @@ func newAddGroupAdmin(groupGuid string, memberGuid string, accessList []string) 
 			Action     string   "json:\"action\""
 			AccessList []string "json:\"access_list\""
 		}{GroupGUID: groupGuid, MemberGUID: memberGuid, Action: "SetAdmin", AccessList: accessList},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1319,13 +1130,7 @@ func newGetChannelAllMembers(guid string) (string, error) {
 		Input: struct {
 			ChannelGUID string "json:\"channel_guid\""
 		}{ChannelGUID: guid},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1344,13 +1149,7 @@ func newGetAllGroupMembers(guid string) (string, error) {
 		Input: struct {
 			GroupGUID string "json:\"group_guid\""
 		}{guid},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1369,13 +1168,7 @@ func newGetGroupAdminMembers(guid string) (string, error) {
 		Input: struct {
 			GroupGUID string "json:\"group_guid\""
 		}{guid},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1394,13 +1187,7 @@ func newChannelInfo(guid string) (string, error) {
 		Input: struct {
 			ChannelGUID string "json:\"channel_guid\""
 		}{ChannelGUID: guid},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1419,13 +1206,7 @@ func newGetInfoById(username string) (string, error) {
 		Input: struct {
 			Username string "json:\"username\""
 		}{Username: username},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1445,13 +1226,7 @@ func newDeleteChatHistory(guid string, lastMessageId string) (string, error) {
 			ObjectGUID    string "json:\"object_guid\""
 			LastMessageID string "json:\"last_message_id\""
 		}{guid, lastMessageId},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1470,13 +1245,7 @@ func newGroupInfo(groupGuid string) (string, error) {
 		Input: struct {
 			GroupGUID string "json:\"group_guid\""
 		}{groupGuid},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1498,13 +1267,7 @@ func newForwardMessage(fromGuid, ToGuid string, messageIds []string) (string, er
 			MessageIds     []string "json:\"message_ids\""
 			Rnd            string   "json:\"rnd\""
 		}{FromObjectGUID: fromGuid, ToObjectGUID: ToGuid, MessageIds: messageIds, Rnd: randNum()},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1524,13 +1287,7 @@ func newDeleteUserChat(userGuid, lastDeletedMessageId string) (string, error) {
 			UserGUID             string "json:\"user_guid\""
 			LastDeletedMessageID string "json:\"last_deleted_message_id\""
 		}{UserGUID: userGuid, LastDeletedMessageID: lastDeletedMessageId},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1550,13 +1307,7 @@ func newBlockUser(userGuid string, action string) (string, error) {
 			UserGUID string "json:\"user_guid\""
 			Action   string "json:\"action\""
 		}{UserGUID: userGuid, Action: action},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1575,13 +1326,7 @@ func newUserInfo(userGuid string) (string, error) {
 		Input: struct {
 			UserGUID string "json:\"user_guid\""
 		}{UserGUID: userGuid},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1602,13 +1347,7 @@ func newPinMessage(groupGuid, messageId string) (string, error) {
 			MessageID  string "json:\"message_id\""
 			Action     string "json:\"action\""
 		}{groupGuid, messageId, "Pin"},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{appName, appVersion, platform, packAge, langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1629,13 +1368,7 @@ func newRemoveMember(groupGuid string, memberGuid string) (string, error) {
 			MemberGuid string "json:\"member_guid\""
 			Action     string "json:\"action\""
 		}{GroupGuid: groupGuid, MemberGuid: memberGuid, Action: "Set"},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1654,13 +1387,7 @@ func newLeaveGroup(guid string) (string, error) {
 		Input: struct {
 			Guid string "json:\"group_guid\""
 		}{Guid: guid},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1679,13 +1406,7 @@ func newJoinGroup(hashLink string) (string, error) {
 		Input: struct {
 			HashLink string "json:\"hash_link\""
 		}{HashLink: hashLink},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1702,13 +1423,7 @@ func newWebSocket(auth string, index int) ([]WebSocketResponse, error) {
 	data := webSocketData{
 		Method: webSocketMethod,
 		Input:  struct{}{},
-		Clinet: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: apiVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Clinet: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1727,7 +1442,7 @@ func newWebSocket(auth string, index int) ([]WebSocketResponse, error) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	rand.Seed(time.Now().Unix())
+	// rand.Seed(time.Now().Unix())
 	conn, _, err := websocket.DefaultDialer.Dial(webSocketURL[rand.Intn(3-0+1)+0], nil)
 	if err != nil {
 		log.Fatalln(err)
@@ -1792,13 +1507,7 @@ func newSendFile(text, guid, dcId, fileId, fileName string, size int, accessHash
 			Mime          string "json:\"mime\""
 			AccessHashRec string "json:\"access_hash_rec\""
 		}{DcID: dcId, FileID: fileId, Type: "File", FileName: fileName, Size: size, Mime: "mime", AccessHashRec: accessHashRec}},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	if text != "" && text != " " {
 		data.Input.Text = text
@@ -1850,13 +1559,7 @@ func newSendImage(guid string, caption string, dcId string, id string, fileName 
 			Height        int    "json:\"height\""
 			AccessHashRec string "json:\"access_hash_rec\""
 		}{DcID: dcId, FileID: id, Type: "Image", FileName: fileName, Size: size, Mime: "mime", ThumbInline: th, Width: width, Height: height, AccessHashRec: accessHashReq}},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	if caption != "" && caption != " " {
 		data.Input.Text = caption
@@ -1918,13 +1621,7 @@ func newEditText(text string, guid string, messageId string) (string, error) {
 			MessageID  string "json:\"message_id\""
 			Text       string "json:\"text\""
 		}{Text: text, ObjectGUID: guid, MessageID: messageId},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{appName, appVersion, platform, packAge, langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -1938,7 +1635,6 @@ func newEditText(text string, guid string, messageId string) (string, error) {
 }
 
 func randNum() string {
-	rand.Seed(time.Now().UnixNano())
 	return strconv.Itoa(rand.Int() / 10000000000000)
 }
 func newSendMessage(text string, guid string, messageId string) (string, error) {
@@ -1950,13 +1646,7 @@ func newSendMessage(text string, guid string, messageId string) (string, error) 
 			Text           string "json:\"text,omitempty\""
 			ReplyToMessage string "json:\"reply_to_message_id,omitempty\""
 		}{ObjectGuid: guid, Rnd: randNum(), Text: text},
-		Clinet: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{appName, appVersion, platform, packAge, langcode},
+		Clinet: clientVal,
 	}
 	if messageId != "" && messageId != " " {
 		data.Input.ReplyToMessage = messageId
@@ -1982,13 +1672,7 @@ func newDeleteMessage(guid string, messageId ...string) (string, error) {
 			MessageIds []string "json:\"message_ids\""
 			Type       string   "json:\"type\""
 		}{guid, messageIds, "Global"},
-		Client: struct {
-			AppName    string "json:\"app_name\""
-			AppVersion string "json:\"app_version\""
-			Platform   string "json:\"platform\""
-			Package    string "json:\"package\""
-			LangCode   string "json:\"lang_code\""
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
@@ -2067,13 +1751,7 @@ func newSendInfoFile(fileName string, size int) (string, error) {
 			Size     int    `json:"size"`
 			Mime     string `json:"mime"`
 		}{FileName: fileName, Size: size, Mime: "rubika"},
-		Client: struct {
-			AppName    string `json:"app_name"`
-			AppVersion string `json:"app_version"`
-			Platform   string `json:"platform"`
-			Package    string `json:"package"`
-			LangCode   string `json:"lang_code"`
-		}{AppName: appName, AppVersion: appVersion, Platform: platform, Package: packAge, LangCode: langcode},
+		Client: clientVal,
 	}
 	dataJson, err := json.Marshal(data)
 	if err != nil {
