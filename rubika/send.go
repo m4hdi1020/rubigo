@@ -135,6 +135,9 @@ func (b bot) SendFile(guid string, fileName string, data io.Reader, caption stri
 	if guid == "" {
 		return fmt.Errorf("error: Guid is empty")
 	}
+	if fileName == "" || fileName == " "{
+		fileName = "rubigo"
+	}
 	var buf bytes.Buffer
 	i, err := io.Copy(&buf, data)
 	if err != nil {
@@ -529,6 +532,9 @@ func (b bot) SetGroupAccess(groupGuid string, access ...string) error {
 }
 
 func (b bot) SendImage(guid string, imageName string, data io.Reader, caption string, replyToMessageID string) error {
+	if imageName == "" || imageName == " "{
+		imageName = "rubigo"
+	}
 	var buf bytes.Buffer
 	i, err := io.Copy(&buf, data)
 	if err != nil {
