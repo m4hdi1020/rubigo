@@ -58,12 +58,13 @@ fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 
 ## بقیه متد ها:
 ```go
+bot.EditMessage(newText , guid , messageID)
 bot.GetUserInfo("User Guid")
 bot.BlockUser("User Guid")
 bot.UnblockUser("User Guid")
 bot.DeleteUserChat("User Guid" , "last Message Id")
 bot.GetGroupInfo("Group Guid")
-bot.DeleteChatHistory("Chat Guid" , "Last Message Id)
+bot.DeleteChatHistory("Chat Guid" , "Last Message Id")
 bot.GetInfoByUsername("Username")
 bot.GetChannelInfo("Channel Guid")
 bot.GetGroupAdminInfo("Group Guid")
