@@ -57,8 +57,6 @@ fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 ```
 
 
-‍‍
-### متد های کار با گروه ها و کانال ها:
 
 ### مشکلی داخل کتابخونه مشاهده کردید؟ لطفا به من اطلاع بدید
 + Rubika: @go_lang
