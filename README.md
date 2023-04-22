@@ -56,30 +56,10 @@ err = bot.SendImageByLink("link" , "guid" , data , "caption" , "MessageId")
 fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 ```
 
-## بقیه متد ها:
-### متد های کار با پیام ها:
-‍‍```go
-SendMessage(text string, guid string, replyToMessageID string) error
-EditMessage(text string, guid string, messageId string) error
-DeleteMessage(guid string, messageIds ...string) error
-ForwardMessages(fromGuid string, toGuid string, messageIds ...string) error
-PinMessage(groupGuid, messageId string) error
-CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, question string, options ...string) error```
-### متد های کار با فایل ها:
-‍‍```go
-SendFile(guid string, fileName string, data io.Reader, caption string, replyToMessageID string) error
-SendImage(guid string, imageName string, data io.Reader, caption string, replyToMessageID string) error
-SendFileByLink(link string, guid string, caption string, replyToMessageId string) error
-SendImageByLink(link string, guid string, caption string, replyToMessageId string) error```
+
+###متد های کار با فایل ها:
+‍‍
 ### متد های کار با گروه ها و کانال ها:
-‍```go
-JoinGroupByLink(link string) (string, error)
-LeaveGroup(guid string) error
-RemoveMember(groupGuid string, memberGuid string) error
-AddAdminToGroup(groupGuid, memberGuid string, adminAccessList ...string) error
-RemoveAdminGroup(groupGuid string, memberGuid string) error
-SetGroupAccess(groupGuid string, access ...string) error
-UnbanGroupMember(groupGuid, memeberGuid string) error ```
 
 ### مشکلی داخل کتابخونه مشاهده کردید؟ لطفا به من اطلاع بدید
 + Rubika: @go_lang
