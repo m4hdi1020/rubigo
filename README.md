@@ -79,7 +79,7 @@ RemoveMember(groupGuid string, memberGuid string) error
 AddAdminToGroup(groupGuid, memberGuid string, adminAccessList ...string) error
 RemoveAdminGroup(groupGuid string, memberGuid string) error
 SetGroupAccess(groupGuid string, access ...string) error
-UnbanGroupMember(groupGuid, memeberGuid string) error```
+UnbanGroupMember(groupGuid, memeberGuid string) error ```
 
 ### مشکلی داخل کتابخونه مشاهده کردید؟ لطفا به من اطلاع بدید
 + Rubika: @go_lang
