@@ -59,6 +59,8 @@ fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 ## بقیه متد ها:
 ```go
 bot.EditMessage(newText , guid , messageID)
+bot.DeleteMessage(guid , messageID1 , messageID2 , messageID3 , ...)
+bot.CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, question string, options ...string)
 bot.GetUserInfo("User Guid")
 bot.BlockUser("User Guid")
 bot.UnblockUser("User Guid")
