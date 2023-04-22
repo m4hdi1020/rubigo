@@ -18,7 +18,7 @@ import "github.com/m4hdi1020/rubigo/rubika"
 ‍‍
 
 ```go
-bot , err := rubika.NewBot("auth")
+bot , err := rubika.NewBot(Auth)
 ```
 
 ## برای بدست آوردن آخرین پیام های دریافت شده
