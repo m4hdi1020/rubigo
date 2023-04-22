@@ -59,19 +59,55 @@ fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 ## تمام متد ها:
 ### کار با متن ها و پیام ها:
 ```go
-
+GetMessageAll() ([]getChats, error)
+GetMessageAllWebSocket(index int) ([]WebSocketResponse, error)
+WebSocket() (*websocket.Conn, error)
+GetMessagesInfoByID(guid string, messageIds ...string) (getMessageInfoData, error)
+SendMessage(text string, guid string, replyToMessageID string) error
+EditMessage(text string, guid string, messageId string) error
+DeleteMessage(guid string, messageIds ...string) error
+ForwardMessages(fromGuid string, toGuid string, messageIds ...string) error
 ```
 ### کار با فایل ها:
 ```go
+SendFile(guid string, fileName string, data io.Reader, caption string, replyToMessageID string) error
+SendImage(guid string, imageName string, data io.Reader, caption string, replyToMessageID string) error
+SendFileByLink(link string, guid string, caption string, replyToMessageId string) error
+SendImageByLink(link string, guid string, caption string, replyToMessageId string) error
+DownloadFile(guid string, messageId string) (string, []byte, error)
 
 ```
 ### کار با گروه ها و کانال ها:
 ```go
-
+GetGroupInfo(groupGuid string) (groupInfo, error)
+GetChannelInfo(channelGuid string) (channelInfoData, error)
+GetGroupAdminInfo(groupGuid string) (adminMembersData, error)
+GetAllGroupMembers(groupGuid string) (allGroupMembersData, error)
+GetChannelAllMembers(channelGuid string) (channelMembersData, error)
+GetGroupLink(groupGuid string) (string, error)
+GetChannelLink(channelGuid string) (string, error)
+GetChannelAdmins(channelGuid string) (channelAdmins, error)
+GetBannedGroupMembers(groupGuid string) ([]bannedList, error)
+JoinGroupByLink(link string) (string, error)
+LeaveGroup(guid string) error
+RemoveMember(groupGuid string, memberGuid string) error
+AddAdminToGroup(groupGuid, memberGuid string, adminAccessList ...string) error
+// Admin Accesses: AdminChangeInfoAccess, AdminPinMessageAccess, AdminDeleteGlobalMessage, AdminBanMember , AdminSetJoinLink, AdminSetAdmin
+RemoveAdminGroup(groupGuid string, memberGuid string) error
+UnbanGroupMember(groupGuid, memeberGuid string) error
+SetGroupAccess(groupGuid string, access ...string) error
+// Group Accesses: AccessGroupAddMember, AccessGroupViewAdmins  , AccessGroupSendMessage , AccessGroupViewMembers
+CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, question string, options ...string) error
 ```
 ### کار با کاربر ها و اکانت ها:
 ```go
-
+GetUserInfo(userGuid string) (userInfo, error)
+BlockUser(userGuid string) error
+UnblockUser(userGuid string) error
+GetBlockedUsersList() ([]blockedUsers, error)
+DeleteUserChat(userGuid, lastMessageId string) error
+DeleteChatHistory(chatGuid string, lastMessageId string) error
+GetInfoByUsername(username string) (infoByUsername, error)
 ```
 
 
