@@ -57,39 +57,29 @@ fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 ```
 
 ## بقیه متد ها:
-```go
-bot.EditMessage(newText , guid , messageID)
-bot.DeleteMessage(guid , messageID1 , messageID2 , messageID3 , ...)
-bot.CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, question string, options ...string)
-bot.GetUserInfo("User Guid")
-bot.BlockUser("User Guid")
-bot.UnblockUser("User Guid")
-bot.DeleteUserChat("User Guid" , "last Message Id")
-bot.GetGroupInfo("Group Guid")
-bot.DeleteChatHistory("Chat Guid" , "Last Message Id")
-bot.GetInfoByUsername("Username")
-bot.GetChannelInfo("Channel Guid")
-bot.GetGroupAdminInfo("Group Guid")
-bot.GetAllGroupMembers("Group Guid")
-bot.GetChannelAllMembers("Channel Guid")
-bot.GetGroupLink("Group Guid")
-bot.GetChannelLink("Channel Guid")
-bot.GetChannelAdmins("Channel Guid")
-bot.GetMessagesInfoByID("Chat Guid" , "Message Id")
-bot.EditMessage("New Text" , "Chat Guid" , "Message ID")
-bot.DeleteMessage("Chat Guid" , "Message ID 1" , "Message ID 2" , "Message ID 3" , "...")
-bot.CreatePoll("Chat Guid" , isAnonymous , multipleAnswers , "question" , "option1" , "option2" , "option3" , "...")
-bot.JoinGroupByLink("Group Link")
-bot.LeaveGroup("Group Guid")
-bot.RemoveMember("Group Guid" , "Member Guid")
-bot.PinMessage("Group Guid" , "Message ID")
-bot.ForwardMessages("from Guid" , "to Guid" , "message ID 1" , "Message ID 2" , "Message ID 3" , "...")
-bot.AddAdminToGroup("Group Guid" , "Member Guid" , AdminAccessList...)
-// Admin Access Option => AdminChangeInfoAccess , AdminPinMessageAccess , AdminDeleteGlobalMessage , AdminBanMember , AdminSetJoinLink , AdminSetAdmin , AdminSetMemberAccess
-bot.RemoveAdminGroup("Group Guid" , "Admin Guid")
-bot.SetGroupAccess("Group Guid" , GroupAccess...)
-// Group Acess Option => AccessGroupAddMember , AccessGroupViewAdmins , AccessGroupSendMessage , AccessGroupViewMembers
-```
+### متد های کار با پیام ها:
+‍‍```go
+SendMessage(text string, guid string, replyToMessageID string) error
+EditMessage(text string, guid string, messageId string) error
+DeleteMessage(guid string, messageIds ...string) error
+ForwardMessages(fromGuid string, toGuid string, messageIds ...string) error
+PinMessage(groupGuid, messageId string) error
+CreatePoll(guid string, isAnonymous bool, multipleAnswers bool, question string, options ...string) error```
+### متد های کار با فایل ها:
+‍‍```go
+SendFile(guid string, fileName string, data io.Reader, caption string, replyToMessageID string) error
+SendImage(guid string, imageName string, data io.Reader, caption string, replyToMessageID string) error
+SendFileByLink(link string, guid string, caption string, replyToMessageId string) error
+SendImageByLink(link string, guid string, caption string, replyToMessageId string) error```
+### متد های کار با گروه ها و کانال ها:
+‍```go
+JoinGroupByLink(link string) (string, error)
+LeaveGroup(guid string) error
+RemoveMember(groupGuid string, memberGuid string) error
+AddAdminToGroup(groupGuid, memberGuid string, adminAccessList ...string) error
+RemoveAdminGroup(groupGuid string, memberGuid string) error
+SetGroupAccess(groupGuid string, access ...string) error
+UnbanGroupMember(groupGuid, memeberGuid string) error```
 
 ### مشکلی داخل کتابخونه مشاهده کردید؟ لطفا به من اطلاع بدید
 + Rubika: @go_lang
