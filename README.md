@@ -57,7 +57,6 @@ fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 ```
 
 
-###متد های کار با فایل ها:
 ‍‍
 ### متد های کار با گروه ها و کانال ها:
 
