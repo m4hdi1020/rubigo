@@ -39,21 +39,6 @@ func (b bot) GetMessageAll() ([]getChats, error) {
 	return response.Data.Chats, nil
 }
 
-func (b bot) GetGroupMessageAll() ([]getChats, error) {
-	messages, err := b.GetMessageAll()
-	if err != nil {
-		return nil, err
-	}
-	var messageList []getChats
-	for i := range messages {
-		if messages[i].AbsObject.ObjectGuid[0:1] == "g" {
-
-			messageList = append(messageList, messages[i])
-		}
-	}
-	return messageList, nil
-}
-
 func (b bot) GetMessageAllWebSocket(index int) ([]WebSocketResponse, error) {
 	if index <= 0 {
 		return nil, fmt.Errorf("error: please enter a number greater than zero")
