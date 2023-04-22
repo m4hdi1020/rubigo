@@ -56,6 +56,24 @@ err = bot.SendImageByLink("link" , "guid" , data , "caption" , "MessageId")
 fileName , data , err := bot.DownloadFile("guid" , "MessageId")
 ```
 
+## تمام متد ها:
+### کار با متن ها و پیام ها:
+```go
+
+```
+### کار با فایل ها:
+```go
+
+```
+### کار با گروه ها و کانال ها:
+```go
+
+```
+### کار با کاربر ها و اکانت ها:
+```go
+
+```
+
 
 
 ### مشکلی داخل کتابخونه مشاهده کردید؟ لطفا به من اطلاع بدید
