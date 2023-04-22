@@ -4,7 +4,7 @@
 # برای نصب:
 
 ```sh
-go get -u github.com/m4hdi1020/rubigo@v1.5.5
+go get -u github.com/m4hdi1020/rubigo
 ```
 
 # شروع کردن:
