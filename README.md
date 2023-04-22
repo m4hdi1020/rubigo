@@ -32,29 +32,16 @@ messages , err := bot.GetMessageAll()
 ## برای ارسال متن
 
 ```go
-err = bot.SendMessage("guid" , "text" , "messageId")
+err = bot.SendMessage(Guid string, Text string, ReplyToMessageID string)
 ```
-**توجه کنید که مقدار مسیج آیدی برای ریپلای کردن روی پیامه و اگر نمیخواید ریپلای کنه فقط کافیه مقدار "" رو قرار بدید**
+**توجه داشته باشید که مقدار مسیج آیدی برای ریپلای کردن روی پیامه و اگر نمیخواید ریپلای کنه فقط کافیه مقدار "" رو قرار بدید**
 
 ## ارسال فایل
 
 ```go
-err = bot.SendFile("guid" , "fileName" , data (io.Reader) , "caption" , "MessageId")
+err = bot.SendFile(Guid , FileName , data io.Reader , Caption , MessageID)
 ```
 ***اگر نمیخواید روی پیامی ریپلای کنه مقدار مسیج آیدی رو "" قرار بدید***
-برای ارسال عکس هم به همین شکل فقط از متد bot.SendImage استفاده کنید
-
-## ارسال فایل و عکس با لینک
-```go
-err = bot.SendFileByLink("link" , "guid" , data , "caption" , "MessageId")
-
-err = bot.SendImageByLink("link" , "guid" , data , "caption" , "MessageId")
-```
-
-## دانلود فایل از روبیکا
-```go
-fileName , data , err := bot.DownloadFile("guid" , "MessageId")
-```
 
 ## تمام متد ها:
 ### کار با متن ها و پیام ها:
