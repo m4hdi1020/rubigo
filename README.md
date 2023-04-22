@@ -41,7 +41,7 @@ err = bot.SendMessage(Guid string, Text string, ReplyToMessageID string)
 ```go
 err = bot.SendFile(Guid , FileName , data io.Reader , Caption , MessageID)
 ```
-***مقادیر Caption و MessageID می تونن "" باشن***
+***مقادیر Caption و MessageID  و FileName می تونن "" باشن***
 
 ## تمام متد ها:
 ### کار با متن ها و پیام ها:
