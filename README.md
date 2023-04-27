@@ -47,8 +47,7 @@ err = bot.SendFile(Guid , FileName , data io.Reader , Caption , MessageID)
 ### کار با متن ها و پیام ها:
 ```go
 GetMessageAll() ([]getChats, error)
-GetMessageAllWebSocket(index int) ([]WebSocketResponse, error)
-WebSocket() (*websocket.Conn, error)
+GetMessageAllWebSocket(func(*WebSocketResponse))
 GetMessagesInfoByID(guid string, messageIds ...string) (getMessageInfoData, error)
 SendMessage(text string, guid string, replyToMessageID string) error
 EditMessage(text string, guid string, messageId string) error
